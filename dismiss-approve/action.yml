@@ -1,0 +1,21 @@
+name: "dismiss Approve"
+description: "Dismiss Approve with Github Apps"
+branding:
+  icon: check-circle
+  color: blue
+inputs:
+  token: 
+    description: Github Token
+    required: false
+    default: ${{ github.token }}
+
+  pr:
+    description: Pull Request Number
+    required: true
+  
+  message:
+    description: Dismissal message
+    required: true
+runs:
+  using: node20
+  main: index.js
