@@ -1,4 +1,7 @@
 {
     "name": "dismiss-approve",
-    "main": "main.js"
+    "main": "main.js",
+    "scripts": {
+        "build": "ncc build --out . src/main.js"
+    }
 }
