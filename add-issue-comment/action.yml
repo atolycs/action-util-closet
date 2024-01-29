@@ -1,7 +1,7 @@
-name: "Add PR comment"
-description: "Add PR comment for bot"
+name: "Add Issue comment"
+description: "Add Issue comment for bot"
 branding:
-  icon: git-pull-request
+  icon: message-square
   color: blue
 inputs:
   token: 
@@ -9,8 +9,8 @@ inputs:
     required: false
     default: ${{ github.token }}
 
-  pr_number:
-    description: PR number
+  issue_number:
+    description: Issue Number
     required: false
     default: ${{ github.event.pull_request.number }}
   message:
