@@ -1,0 +1,21 @@
+name: "Add PR comment"
+description: "Add PR comment for bot"
+branding:
+  icon: check-circle
+  color: blue
+inputs:
+  token: 
+    description: Github Token
+    required: false
+    default: ${{ github.token }}
+
+  pr_number:
+    description: PR number
+    required: true
+
+  message:
+    description: Add comment
+    required: true
+runs:
+  using: node20
+  main: index.js
