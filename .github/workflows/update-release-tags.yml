@@ -27,6 +27,7 @@ jobs:
 
         - uses: actions/checkout@v3
           with:
+            token: ${{ steps.generate-token.outputs.token }}
             fetch-depth: 0
 
         - name: Tag new Target (${{ github.event.inputs.target }} -> ${{ github.event.inputs.major_version }})
@@ -35,6 +36,5 @@ jobs:
 
         - name: Push new Tag
           run: |
-            git remote set-url origin "https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/${GITHUB_REPOSITORY}"
             git push origin --tags --force
           
