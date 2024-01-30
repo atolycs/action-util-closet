@@ -1,0 +1,20 @@
+name: "Create Issue comment"
+description: "Create Issue comment for bot"
+branding:
+  icon: message-square
+  color: blue
+inputs:
+  token: 
+    description: Github Token
+    required: false
+    default: ${{ github.token }}
+
+  title:
+    description: Issue TItle
+    required: true
+  body:
+    description: Issue body
+    required: false
+runs:
+  using: node20
+  main: index.js

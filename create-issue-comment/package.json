@@ -1,0 +1,7 @@
+{
+    "name": "create-issue-comment",
+    "main": "main.js",
+    "scripts": {
+        "build": "ncc build --out . src/main.js"
+    }
+}
