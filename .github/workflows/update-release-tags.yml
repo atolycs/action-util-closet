@@ -20,7 +20,7 @@ jobs:
       steps:
         - name: Generating Instant Token
           uses: actions/create-github-app-token@v1
-          id: genrate-token
+          id: generate-token
           with:
             app-id: ${{ secrets.APP_ID }}
             private-key: ${{ secrets.APP_PEM }}
@@ -39,6 +39,6 @@ jobs:
 
         - name: Push new Tag
           run: |
-            git remote set-url origin "https://x-access-token:${{ steps.genrate-token.outputs.token }}@github.com/${GITHUB_REPOSITORY}"
-            git push origin ${{ github.event.inputs.major_version }} --force
+            git remote set-url origin "https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/${GITHUB_REPOSITORY}"
+            git push origin --tags --force
           
