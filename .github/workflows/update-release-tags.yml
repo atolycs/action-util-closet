@@ -1,5 +1,5 @@
 name: Update Release Tags
-run-name: Move ${{ github.event.inputs.major_version }} to ${{ github.event.inputs.target }}
+run-name: Move ${{ github.event.inputs.target }} to ${{ github.event.inputs.major_version }}
 
 on:
  workflow_dispatch:
