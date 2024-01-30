@@ -30798,7 +30798,7 @@ const github = __nccwpck_require__(2189)
 async function main() {
     try {
         const token = core.getInput("token", { required: true })
-        const pr_number = core.getInput("pr", { required: true }) || github.context.pr_number
+        const issue_number = core.getInput("issue_number", { required: true })
         const message = core.getInput("message", { required: true })
 
         const octkit = github.getOctokit(token)
