@@ -1,7 +1,0 @@
-{
-    "name": "update-release-tag",
-    "main": "main.js",
-    "scripts": {
-        "build": "ncc build --out . src/main.js"
-    }
-}
