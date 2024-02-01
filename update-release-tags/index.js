@@ -30807,7 +30807,26 @@ async function main() {
     const major_version = version_tags.split(".")[0]
 
     const tags_list = await octkit.request(`GET ${api_tags_uri}`) 
-    console.log(JSON.parse(tags_list.data))
+
+    const latest_version_sha = tags_list.data[0].commit.sha
+
+    tags_list.data.forEach(async (element) => {
+        if (element.name == major_version) {
+            await octkit.rest.git.updateRef({
+                ...github.context,
+                ref: `tags/${major_version}`,
+                sha: latest_version_sha,
+                force: yes
+            })
+        } else {
+            await octkit.rest.git.createRef({
+                ...github.context,
+                ref: `tags/${major_version}`,
+                sha: latest_version_sha
+            })
+        }
+    });
+
 
    } catch (error) {
     core.setFailed(error)
