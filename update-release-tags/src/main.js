@@ -10,8 +10,8 @@ async function main() {
 
     //const simple_version_tags = version_tags.replace("ref\/tags\/", "")
 
-    const baseUri = octkit.request.defaults.baseUrl
-    const api_tags_uri = github.context.payload.repository.tags_url.replace(baseUri, "")
+    const { baseUrl } = octkit.request.defaults()
+    const api_tags_uri = github.context.payload.repository.tags_url.replace(baseUrl, "")
 
     const major_version = version_tags.split(".")[0]
 
