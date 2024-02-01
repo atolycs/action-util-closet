@@ -30,7 +30,7 @@ jobs:
           with:
             token: ${{ steps.generate-token.outputs.token }}
             fetch-depth: 0
-            ref: res/tags/${{ github.event.inputs.target }}
+            ref: ref/tags/${{ github.event.inputs.target }}
 
         - name: Update Major Tags
           uses: ./update-release-tags/
