@@ -8,40 +8,34 @@ async function main() {
 
     const octkit = github.getOctokit(token)
 
-    const major_version = version_tags.split('.')[0]
+    const simple_version_tags = version_tags.replace("ref\/tags\/", "")
 
-    const _alias_sha = await octkit.rest.git.getRef({
-      ...github.context,
-      ref: `tags/${version_tags}`,
-    })
+    const major_version = simple_version_tags.split(".")[0]
 
     let ref
     try {
-      ref = await octkit.rest.git.getRef({
-        ...github.context,
-        ref: `tags/${major_version}`,
-      })
-      core.info(`tag ${major_version} already exists.\noverwrite.`)
-    } catch (error) {
-      core.info(`tag ${major_version} does not exist yet.\ncreating.`)
+        ref = await octkit.rest.git.getRef({
+            ...github.context,
+            ref: `ref/tags/${major_version}`
+        })
+        core.info(`==> ${major_version} already exists. overwrite`)
+    } catch(error) {
+        core.info(`==> ${major_version} does not exsit. creating`)
     }
 
     if (ref) {
-      await octkit.rest.git.updateRef({
-        ...github.context,
-        sha: _alias_sha.object.sha,
-        ref: `tags/${major_version}`,
-        force: true,
-      })
-      core.info(`tag ${version_tags} link to ${major_version}. `)
+        await octkit.rest.git.updateRef({
+            ...github.context,
+            ref: `ref/tags/${major_version}`,
+            force: true
+        })
     } else {
-      await octkit.rest.git.createRef({
-        ...github.context,
-        sha: _alias_sha.object.sha,
-        ref: `tags/${major_version}`,
-      })
-      core.info(`create tag ${version_tags} link to ${major_version}. `)
+        await octkit.rest.git.createTag({
+            ...github.context,
+            ref:
+        })
     }
+
   } catch (error) {
     core.setFailed(error)
   }
