@@ -1,5 +1,5 @@
 name: Update Release Tags
-run-name: Move ${{ github.event.inputs.target }} to ${{ github.event.inputs.target }}
+run-name: Move ${{ github.event.inputs.target }} to ${{ github.event.inputs.major_version }}
 
 on:
  workflow_dispatch:
@@ -28,7 +28,15 @@ jobs:
             fetch-depth: 0
 
         - name: Tag new Target (${{ github.event.inputs.target }} -> ${{ github.event.inputs.major_version }})
+          env:
+            GH_TOKEN: ${{ steps.generate-token.outputs.token }}
           run: |
+            GIT_ID=$(echo "::add-mask::$(gh api /user --jq '.id')")
+            GIT_USER=$(gh api /user --jq '.login')
+            GIT_EMAIL="${GIT_ID}+${GIT_USER}@users.noreply.github.com"
+            git config --global user.email "${GIT_EMAIL}"
+            git config --global user.name "${GIT_USER}"
+
             git tag -fa ${{ github.event.inputs.major_version }} ${{ github.event.inputs.target }} \
               -m "${{ github.event.inputs.major_version }} Alias routeing ${{ github.event.inputs.target }} "
 
