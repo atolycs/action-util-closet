@@ -30816,7 +30816,7 @@ async function main() {
                 ...github.context,
                 ref: `tags/${major_version}`,
                 sha: latest_version_sha,
-                force: yes
+                force: true
             })
         } else {
             await octkit.rest.git.createRef({
