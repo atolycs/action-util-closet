@@ -1,5 +1,6 @@
 name: Update Release Tags
-run-name: Move ${{ github.event.inputs.target }} to ${{ github.event.inputs.major_version }}
+run-name: Update Major version link to ${{ github.event.inputs.target }}
+#run-name: Move ${{ github.event.inputs.target }} to ${{ github.event.inputs.major_version }}
 
 on:
  workflow_dispatch:
@@ -31,7 +32,7 @@ jobs:
             fetch-depth: 0
 
         - name: Update Major Tags
-          uses: ./update-release-tags
+          uses: ./update-release-tags/
           with:
             token: ${{ steps.generate-token.outputs.token }}
             version_tags: ${{ github.event.inputs.target }}
