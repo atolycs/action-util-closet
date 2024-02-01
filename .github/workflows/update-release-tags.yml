@@ -31,7 +31,7 @@ jobs:
           env:
             GH_TOKEN: ${{ steps.generate-token.outputs.token }}
           run: |
-            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --global user.email "114726381+ardentcats[bot]@users.noreply.github.com"
             git config --global user.name "ardentcats[bot]"
             
             git tag -fa ${{ github.event.inputs.major_version }} ${{ github.event.inputs.target }} \
