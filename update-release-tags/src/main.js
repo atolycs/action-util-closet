@@ -10,13 +10,12 @@ async function main() {
 
     //const simple_version_tags = version_tags.replace("ref\/tags\/", "")
 
-    const { baseUrl } = octkit.request.defaults()
-    const api_tags_uri = github.context.payload.repository.tags_url.replace(baseUrl, "")
+    const api_tags_uri = github.context.payload.repository.tags_url.replace("https://api.github.com", "")
 
     const major_version = version_tags.split(".")[0]
 
-    console.log(api_tags_uri)
-    
+    const tags_list = await octkit.request(`GET ${api_tags_uri}`) 
+    console.log(JSON.parse(tags_list.data))
 
    } catch (error) {
     core.setFailed(error)
