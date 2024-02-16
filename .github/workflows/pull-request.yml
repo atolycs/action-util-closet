@@ -1,0 +1,66 @@
+name: Check with ReviewDog
+
+on:
+  workflow_dispatch:
+  pull_request:
+        branches:
+          - main
+
+jobs:
+  reviewdog:
+    name: Setup Reviewdog
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: setup node
+        uses: actions/setup-node@v4
+      
+      - name: setup Reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      
+      - name: cache activate
+        uses: actions/cache@v4
+        id: node_modules_cache_id
+        env:
+           cache-name: 'node_modules'
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-lint-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-lint
+      
+      - name: checking node_modules cache
+        run: echo '${{ toJSON(steps.node_modules_cache_id) }}'
+      
+      - if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+        name: Install eslint and dependencies
+        run: |
+          npm ci
+      
+      - name: Installed eslint check
+        run: npm ls --depth=1
+
+  review_result:
+     name: Reviewdog Result
+     runs-on: ubuntu-latest
+     steps:
+      - name: checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Generate Token
+        id: create-token
+        uses: ./action-app-auth
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PEM }}
+
+      - name: Review Result
+        uses: ./add-pr-comment
+        with:
+          token: ${{ steps.create-token.outputs.token }}
+          message: "meow, I'm Approve!"

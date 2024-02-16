@@ -37,7 +37,7 @@ jobs:
             fetch-depth: 0
         
         - name: Tag new Target ${{ github.event.inputs.target }}
-          uses: ./
+          uses: ./marjo-release-tags/
           with:
             token: ${{ steps.generate-token.outputs.token }}
             alias_version: ${{ github.event.inputs.target }}
