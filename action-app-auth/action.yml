@@ -1,0 +1,23 @@
+name: Github App Authenticator (commiter)
+description: Test App Authentication with Github REST API /user
+
+inputs:
+   app-id:
+     required: true
+     description: Github App ID
+   private-key:
+     requied: true
+     description: Github App Private Key
+
+outputs:
+  token:
+    description: "Github installation access token"
+  commit_name:
+    description: "Github App bot user name"
+  commit_address:
+    description: "Github App commit address"
+
+runs:
+  using: node20
+  main: index.js
+  post: post.js
