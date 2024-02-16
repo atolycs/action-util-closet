@@ -1,0 +1,27 @@
+name: "major-version-tag-update"
+description: "major version tag link update"
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  token:
+    description: Github Token
+    required: true
+    default: ${{ github.token }}
+
+  alias_version:
+    description: Link major version tag number
+    required: true
+
+  commit-user-id:
+    description: Tag push user id
+    default: ${{ github.actor }}
+  
+  commit-email:
+    description: Tag push user commit email
+    default: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+
+runs:
+  using: node20
+  main: index.js

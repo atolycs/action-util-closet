@@ -1,43 +1,45 @@
-name: Update Release Tags
-run-name: Move ${{ github.event.inputs.target }} to ${{ github.event.inputs.major_version }}
+name: Update Major Version Tag
+run-name: Update Major Version Tag (${{ github.event.inputs.target }})
 
 on:
- workflow_dispatch:
+  workflow_dispatch:
     inputs:
-      target:
-        description: The tag or reference to use
-        required: true
+        target:
+            description: The tag or reference to use
+            required: true
 
-      major_version:
-        description: The tag major version
-        required: true
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
 jobs:
-  tag:
-      runs-on: ubuntu-latest
-      steps:
+   tagging:
+     runs-on: ubuntu-latest
+     name: Update Tagging
+     steps:
+        # - name: Generating Instant Token
+        #   uses: actions/create-github-app-token@v1
+        #   id: generate-token
+        #   with:
+        #     app-id: ${{ secrets.APP_ID }}
+        #     private-key: ${{ secrets.APP_PEM }}
         - name: Generating Instant Token
-          uses: actions/create-github-app-token@v1
+          uses: atolycs/action-app-auth@main
           id: generate-token
           with:
             app-id: ${{ secrets.APP_ID }}
             private-key: ${{ secrets.APP_PEM }}
 
-        - uses: actions/checkout@v3
+
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        
+        - name: Tag new Target ${{ github.event.inputs.target }}
+          uses: ./
           with:
             token: ${{ steps.generate-token.outputs.token }}
-            fetch-depth: 0
-
-        - name: Tag new Target (${{ github.event.inputs.target }} -> ${{ github.event.inputs.major_version }})
-          env:
-            GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-          run: |
-            git config --global user.email "114726381+ardentcats[bot]@users.noreply.github.com"
-            git config --global user.name "ardentcats[bot]"
-            
-            git tag -fa ${{ github.event.inputs.major_version }} ${{ github.event.inputs.target }} \
-              -m "${{ github.event.inputs.major_version }} Alias routeing ${{ github.event.inputs.target }} "
-
-        - name: Push new Tag
-          run: |
-            git push origin --tags --force
-          
+            alias_version: ${{ github.event.inputs.target }}
+            commit-user-id: ${{ steps.generate-token.outputs.commit_name }}
+            commit-email: ${{ steps.generate-token.outputs.commit_address }}
