@@ -14,7 +14,7 @@ async function main() {
         await octokit.rest.pulls.createReviewComment({
             ...github.context.repo,
             pull_number: pr_number,
-            message: message
+            body: message
         })
 
         core.info(`==> PR #${pr_number} to add PR comment`)
