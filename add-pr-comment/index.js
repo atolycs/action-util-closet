@@ -30801,9 +30801,9 @@ async function main() {
         const pr_number = core.getInput("pr_number", { required: true }) || github.context.pr_number
         const message = core.getInput("message", { required: true })
 
-        const octkit = github.getOctokit(token)
+        const octokit = github.getOctokit(token)
 
-        octkit.rest.pulls.createReviewComment({
+        await octokit.rest.pulls.createReviewComment({
             ...github.context.repo,
             pull_number: pr_number,
             message: message
