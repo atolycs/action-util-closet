@@ -11,11 +11,11 @@ async function main() {
 
         const octokit = github.getOctokit(token)
        
-        octokit.request.defaults = {
+        octokit.request.defaults({
             headers: {
                 authorization: `token ${token}`
             }
-        }
+        })
         
 
         const result = await octokit.rest.pulls.createReview({
