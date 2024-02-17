@@ -16,7 +16,7 @@ inputs:
   message:
     description: Add comment
     required: true
-  bot-reviewer:
+  bot-reviewers:
     description: Add bot reviewer
     required: false
     default: ${{ github.actor }}

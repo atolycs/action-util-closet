@@ -30799,7 +30799,7 @@ async function main() {
     try {
         const token = core.getInput("token", { required: true })
         const pr_number = core.getInput("pr_number", { required: true }) || github.context.pr_number
-        const reviewers = core.getInput("reviewers", { required: false })
+        const reviewers = core.getInput("bot-reviewers", { required: false })
         const message = core.getInput("message", { required: true })
 
         const octokit = github.getOctokit(token)
