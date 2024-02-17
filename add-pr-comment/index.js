@@ -30803,11 +30803,15 @@ async function main() {
 
         const octokit = github.getOctokit(token)
         
-        await octokit.rest.issues.createComment({
+        const result = await octokit.rest.issues.createComment({
             ...github.context.repo,
             issue_number: pr_number,
             body: message
-        })
+        }).data
+
+        if (core.isDebug()) {
+            core.info(result)
+        }
 
 
         // await octokit.rest.pulls.createReviewComment({
