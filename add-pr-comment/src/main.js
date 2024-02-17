@@ -17,10 +17,7 @@ async function main() {
             body: message
         }).data
 
-        if (core.isDebug()) {
-            core.info(result)
-        }
-
+        core.debug(result)
 
         // await octokit.rest.pulls.createReviewComment({
         //     ...github.context.repo,
