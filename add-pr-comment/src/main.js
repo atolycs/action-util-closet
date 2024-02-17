@@ -11,18 +11,18 @@ async function main() {
 
         const octokit = github.getOctokit(token)
        
-        await octokit.request.defaults({
-
-        })
+        octokit.request.defaults = {
+            headers: {
+                authorization: `token ${token}`
+            }
+        }
+        
 
         const result = await octokit.rest.pulls.createReview({
             ...github.context.repo,
             pull_number: pr_number,
             event: "COMMENT",
             body: message, 
-            headers: {
-                authorization: `token ${token}`
-            }
         })
 
         core.debug(result.data)
