@@ -30798,14 +30798,14 @@ const github = __nccwpck_require__(2189)
 async function main() {
     try {
         const token = core.getInput("token", { required: true })
-        const issue_number = core.getInput("issue_number", { required: true })
+        const issue_number = github.context.issue_number
         const message = core.getInput("message", { required: true })
 
         const octkit = github.getOctokit(token)
 
         octkit.rest.pulls.createReviewComment({
             ...github.context.repo,
-            pull_number: pr_number,
+            pull_number: issue_number,
             message: message
         })
 

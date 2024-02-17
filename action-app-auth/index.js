@@ -44905,8 +44905,10 @@ async function run() {
     // Revoke User Installation Token
 
     core.info(`==> Revoke User Installation Token`);
-    octokit.rest.apps.revokeInstallationAccessToken();
+    const result_token = await octokit.rest.apps.revokeInstallationAccessToken();
 
+    core.debug(result_token.data);
+    
     core.info(`==> Token revoked`);
 
     // Get Repository Installation Token

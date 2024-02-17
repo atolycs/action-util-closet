@@ -9,10 +9,6 @@ inputs:
     required: false
     default: ${{ github.token }}
 
-  issue_number:
-    description: Issue Number
-    required: false
-    default: ${{ github.event.pull_request.number }}
   message:
     description: Add comment
     required: true
