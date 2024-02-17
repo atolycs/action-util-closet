@@ -11,11 +11,17 @@ async function main() {
 
         const octkit = github.getOctokit(token)
 
-        octkit.rest.pulls.createReviewComment({
+        octkit.rest.issues.createComment({
             ...github.context.repo,
-            pull_number: issue_number,
-            message: message
+            issue_number: issue_number,
+            body: message
         })
+
+        // octkit.rest.pulls.createReviewComment({
+        //     ...github.context.repo,
+        //     pull_number: issue_number,
+        //     message: message
+        // })
 
         core.info(`==> PR #${pr_number} to add PR comment`)
     } catch (error) {
