@@ -51,17 +51,22 @@ jobs:
      steps:
       - name: checkout Repository
         uses: actions/checkout@v4
-      
-      - name: Generate Token
+
+      - name: generate Token
+        uses: actions/create-github-app-token@v1
         id: create-token
-        uses: ./action-app-auth
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PEM }}
+      # - name: Generate Token
+      #   id: create-token
+      #   uses: ./action-app-auth
+      #   with:
+      #     app-id: ${{ secrets.APP_ID }}
+      #     private-key: ${{ secrets.APP_PEM }}
 
       - name: Review Result
-        uses: ./add-pr-comment
+        uses: ./add-issue-comment
         with:
           token: ${{ steps.create-token.outputs.token }}
           message: "meow, I'm Approve!"
-          bot-reviewers: ${{ steps.create-token.outputs.commit_name }}
