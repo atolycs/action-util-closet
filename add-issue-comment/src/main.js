@@ -6,7 +6,7 @@ const github = require("@actions/github")
 async function main() {
     try {
         const token = core.getInput("token", { required: true })
-        const issue_number = github.context.issue_number
+        const issue_number = github.context.payload.pull_request.number
         const message = core.getInput("message", { required: true })
 
         const octkit = github.getOctokit(token)
