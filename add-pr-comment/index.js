@@ -30798,15 +30798,23 @@ const github = __nccwpck_require__(2189)
 async function main() {
     try {
         const token = core.getInput("token", { required: true })
-        const pr_number = core.getInput("pr_number", { required: true }) || github.context.pr_number
+        const pr_number = github.context.payload.pull_request.number
         const message = core.getInput("message", { required: true })
 
         const octokit = github.getOctokit(token)
-        
-        const result = await octokit.rest.issues.createComment({
+       
+        await octokit.request.defaults({
+
+        })
+
+        const result = await octokit.rest.pulls.createReview({
             ...github.context.repo,
-            issue_number: pr_number,
-            body: message
+            pull_number: pr_number,
+            event: "COMMENT",
+            body: message, 
+            headers: {
+                authorization: `token ${token}`
+            }
         })
 
         core.debug(result.data)

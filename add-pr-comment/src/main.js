@@ -10,12 +10,19 @@ async function main() {
         const message = core.getInput("message", { required: true })
 
         const octokit = github.getOctokit(token)
-        
+       
+        await octokit.request.defaults({
+
+        })
+
         const result = await octokit.rest.pulls.createReview({
             ...github.context.repo,
             pull_number: pr_number,
             event: "COMMENT",
-            body: message
+            body: message, 
+            headers: {
+                authorization: `token ${token}`
+            }
         })
 
         core.debug(result.data)
