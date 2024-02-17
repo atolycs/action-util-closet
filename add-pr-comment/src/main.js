@@ -15,9 +15,9 @@ async function main() {
             ...github.context.repo,
             issue_number: pr_number,
             body: message
-        }).data
+        })
 
-        core.debug(result)
+        core.debug(result.data)
 
         // await octokit.rest.pulls.createReviewComment({
         //     ...github.context.repo,
