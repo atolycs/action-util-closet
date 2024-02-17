@@ -24,7 +24,9 @@ async function main() {
             await octokit.rest.pulls.requestReviewers({
                 ...github.context.repo,
                 pull_number: pr_number,
-                reviewers: reviewers.toString()
+                reviewers: [
+                    reviewers.toString()
+                ]
             })
         }
 
