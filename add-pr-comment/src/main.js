@@ -27,6 +27,13 @@ async function main() {
 
         core.debug(result.data)
 
+
+        await octokit.rest.pulls.createReview({
+            ...github.context.repo,
+            pull_number: pr_number,
+            event: "APPROVE",
+            body: `${message}\n Approved!`
+        })
         // await octokit.rest.pulls.createReviewComment({
         //     ...github.context.repo,
         //     pull_number: pr_number,
