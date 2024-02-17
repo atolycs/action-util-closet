@@ -30803,7 +30803,7 @@ async function main() {
 
         const octkit = github.getOctokit(token)
 
-        octkit.rest.issues.createComment({
+        await octkit.rest.issues.createComment({
             ...github.context.repo,
             issue_number: issue_number,
             body: message
@@ -30815,7 +30815,7 @@ async function main() {
         //     message: message
         // })
 
-        core.info(`==> PR #${pr_number} to add PR comment`)
+        core.info(`==> PR #${issue_number} to add comment`)
     } catch (error) {
         core.setFailed(error.message)
     }
