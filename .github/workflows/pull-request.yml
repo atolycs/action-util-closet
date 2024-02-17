@@ -64,3 +64,4 @@ jobs:
         with:
           token: ${{ steps.create-token.outputs.token }}
           message: "meow, I'm Approve!"
+          bot-reviewers: ${{ steps.create-token.outputs.commit_name }}

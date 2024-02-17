@@ -16,6 +16,11 @@ inputs:
   message:
     description: Add comment
     required: true
+  bot-reviewer:
+    description: Add bot reviewer
+    required: false
+    default: ${{ github.actor }}
+
 runs:
   using: node20
   main: index.js
