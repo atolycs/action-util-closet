@@ -9,19 +9,13 @@ async function main() {
         const issue_number = github.context.payload.pull_request.number
         const message = core.getInput("message", { required: true })
 
-        const octkit = github.getOctokit(token)
+        const octokit = github.getOctokit(token)
 
-        await octkit.rest.issues.createComment({
+        octokit.rest.pulls.createReviewComment({
             ...github.context.repo,
-            issue_number: issue_number,
-            body: message
+            pull_number: issue_number,
+            message: message
         })
-
-        // octkit.rest.pulls.createReviewComment({
-        //     ...github.context.repo,
-        //     pull_number: issue_number,
-        //     message: message
-        // })
 
         core.info(`==> PR #${issue_number} to add comment`)
     } catch (error) {

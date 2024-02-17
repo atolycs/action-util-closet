@@ -52,21 +52,21 @@ jobs:
       - name: checkout Repository
         uses: actions/checkout@v4
 
-      - name: generate Token
-        uses: actions/create-github-app-token@v1
-        id: create-token
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PEM }}
-      # - name: Generate Token
+      # - name: generate Token
+      #   uses: actions/create-github-app-token@v1
       #   id: create-token
-      #   uses: ./action-app-auth
       #   with:
       #     app-id: ${{ secrets.APP_ID }}
       #     private-key: ${{ secrets.APP_PEM }}
+      - name: Generate Token
+        id: create-token
+        uses: ./action-app-auth
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PEM }}
 
       - name: Review Result
-        uses: ./add-issue-comment
+        uses: ./add-pr-comment
         with:
           token: ${{ steps.create-token.outputs.token }}
           message: "meow, I'm Approve!"
